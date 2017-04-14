@@ -44,14 +44,15 @@ def conv_layer(input, channels_in, channels_out, phase_train, name='conv', patch
 #         tf.summary.histogram('activations', act)
         return act
     
-def fc_layer(input, channels_in, channels_out, name='fc'):
+def fc_layer(input, channels_in, channels_out, phase_train, name='fc'):
     with tf.name_scope(name):
         w = weight_variable([channels_in, channels_out], name='W')
         b = bias_variable([channels_out], name='b')
-        bn = tf.matmul(input, w) + b
+        fc = tf.matmul(input, w) + b
+#        bn = batch_norm(fc, channels_out, phase_train, name + '_bn')
 #         tf.summary.histogram('weights', w)
 #         tf.summary.histogram('biases', b)
-        return bn # return tf.nn.relu(bn)
+        return fc # return tf.nn.relu(bn)
 
 def batch_norm(x, n_out, phase_train, name='bn'):
     """
