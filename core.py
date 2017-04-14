@@ -60,7 +60,8 @@ def fc_layer(input, channels_in, channels_out, phase_train, name='fc'):
 #        bn = batch_norm(fc, channels_out, phase_train, name + '_bn')
 #         tf.summary.histogram('weights', w)
 #         tf.summary.histogram('biases', b)
-        return fc # return tf.nn.relu(bn)
+#         return tf.nn.relu(bn)
+        return fc
 
 def batch_norm(x, n_out, phase_train, name='bn'):
     """
