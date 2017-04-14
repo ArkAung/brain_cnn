@@ -25,7 +25,7 @@ def loss_accuracy(cross_entropy_count, accuracy_count, x, y_, keep_prob, phase_t
         c += accuracy_count.eval(feed_dict=feed_dict)
     return float(l) / float(Y.shape[0]), float(c) / float(Y.shape[0])
 
-def conv_layer(input, channels_in, channels_out, name='conv', patch_x=15, patch_y=15):
+def conv_layer(input, channels_in, channels_out, name='conv', patch_x=15, patch_y=15, phase_train):
     with tf.name_scope(name):
         # 15x15 patch, 8 channels, 32 output channels
         w = weight_variable([patch_x, patch_y, channels_in, channels_out], name='W')
