@@ -1,5 +1,6 @@
 import numpy as np
 import tensorflow as tf
+import math
 
 def next_batch(X, y, size):
     perm = np.random.permutation(X.shape[0])
@@ -8,7 +9,7 @@ def next_batch(X, y, size):
 
 
 def weight_variable(shape, name='W'):
-    initial = tf.truncated_normal(shape, stddev=0.1)
+    initial = tf.truncated_normal(shape, stddev=math.sqrt(6.0 / float(sum(shape))))
     return tf.Variable(initial, name=name)
 
 
