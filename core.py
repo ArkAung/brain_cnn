@@ -42,7 +42,7 @@ def conv_layer(input, channels_in, channels_out, phase_train, name='conv', patch
 #         tf.summary.histogram('weights', w)
 #         tf.summary.histogram('biases', b)
 #         tf.summary.histogram('activations', act)
-        return tf.nn.max_pool(act, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME')
+        return act
     
 def fc_layer(input, channels_in, channels_out, name='fc'):
     with tf.name_scope(name):
