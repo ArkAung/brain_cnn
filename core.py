@@ -10,7 +10,9 @@ def next_batch(X, y, size):
 
 def weight_variable(shape, name='W'):
     # He et. al initialization
-    n = shape[0] * shape[1] * shape[2] # multiplying patch_x, patch_y and input_channel
+    n = reduce(lambda x,y:x*y, shape[:-1])
+    # multiplying patch_x, patch_y and input_channel for convolution layer
+    # just taking input channel for fully connceted layer
     # Note: The paper suggets that we should have a different initialization for first layer
     # since the first layer does not have input which is the output of ReLU
     init_term = math.sqrt(2.0/n)
@@ -40,7 +42,7 @@ def max_pool_layer(input, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAM
 def conv_layer(input, channels_in, channels_out, phase_train, name='conv', patch_x=15, patch_y=15):
     with tf.name_scope(name):
         # 15x15 patch, 8 channels, 32 output channels
-        w = weight_variable([patch_x, patch_y, channels_in, channels_out], name='W')
+        w = weight_variable([patch_x, patch_y, channels_in, channels_out], name='CONV-W')
         b = bias_variable([channels_out], name='B')
         conv = tf.nn.conv2d(input, w, strides=[1, 1, 1, 1], padding='SAME') + b
         bn = batch_norm(conv, channels_out, phase_train, name + '_bn')
@@ -52,7 +54,7 @@ def conv_layer(input, channels_in, channels_out, phase_train, name='conv', patch
     
 def fc_layer(input, channels_in, channels_out, phase_train, name='fc'):
     with tf.name_scope(name):
-        w = weight_variable([channels_in, channels_out], name='W')
+        w = weight_variable([channels_in, channels_out], name='FC-W')
         b = bias_variable([channels_out], name='b')
         fc = tf.matmul(input, w) + b
 #        bn = batch_norm(fc, channels_out, phase_train, name + '_bn')
