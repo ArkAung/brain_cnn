@@ -25,7 +25,13 @@ def loss_accuracy(cross_entropy_count, accuracy_count, x, y_, keep_prob, phase_t
         c += accuracy_count.eval(feed_dict=feed_dict)
     return float(l) / float(Y.shape[0]), float(c) / float(Y.shape[0])
 
-def conv_layer(input, channels_in, channels_out, name='conv', patch_x=15, patch_y=15, phase_train):
+
+def max_pool_layer(input, ksize=[1, 2, 2, 1], strides=[1, 2, 2, 1], padding='SAME', name='max_pool'):
+    with tf.name_scope(name):
+        return tf.nn.max_pool(input, ksize=ksize, strides=strides, padding=padding)
+
+    
+def conv_layer(input, channels_in, channels_out, phase_train, name='conv', patch_x=15, patch_y=15):
     with tf.name_scope(name):
         # 15x15 patch, 8 channels, 32 output channels
         w = weight_variable([patch_x, patch_y, channels_in, channels_out], name='W')
@@ -45,7 +51,7 @@ def fc_layer(input, channels_in, channels_out, name='fc'):
         bn = tf.matmul(input, w) + b
 #         tf.summary.histogram('weights', w)
 #         tf.summary.histogram('biases', b)
-        return tf.nn.relu(bn)
+        return bn # return tf.nn.relu(bn)
 
 def batch_norm(x, n_out, phase_train, name='bn'):
     """
