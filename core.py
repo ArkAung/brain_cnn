@@ -9,7 +9,12 @@ def next_batch(X, y, size):
 
 
 def weight_variable(shape, name='W'):
-    initial = tf.truncated_normal(shape, stddev=math.sqrt(6.0 / float(sum(shape))))
+    # He et. al initialization
+    n = shape[0] * shape[1] * shape[2] # multiplying patch_x, patch_y and input_channel
+    # Note: The paper suggets that we should have a different initialization for first layer
+    # since the first layer does not have input which is the output of ReLU
+    init_term = math.sqrt(2.0/n)
+    initial = tf.truncated_normal(shape, stddev=init_term)
     return tf.Variable(initial, name=name)
 
 
