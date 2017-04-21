@@ -57,12 +57,12 @@ def fc_layer(input, channels_in, channels_out, phase_train, name='fc'):
         w = weight_variable([channels_in, channels_out], name='FC-W')
         b = bias_variable([channels_out], name='b')
         fc = tf.matmul(input, w) + b
-        bn = tf.layers.batch_normalization(fc, momentum=0.5, training=phase_train, name=name + '_bn', reuse=None)
+#        bn = tf.layers.batch_normalization(fc, momentum=0.5, training=phase_train, name=name + '_bn', reuse=None)
 #        bn = batch_norm(fc, channels_out, phase_train, name + '_bn')
 #         tf.summary.histogram('weights', w)
 #         tf.summary.histogram('biases', b)
 #        return fc # return tf.nn.relu(bn)
-    return bn
+    return fc
 
 def batch_norm(x, n_out, phase_train, name='bn'):
     """
