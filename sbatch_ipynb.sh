@@ -4,8 +4,9 @@
 #SBATCH -o OUTPUT.out
 #SBATCH -e STD_ERR.err
 #SBATCH -t 06:00:00
-#SBATCH --gres=gpu:2
+#SBATCH --gres=gpu:1
 #SBATCH --mem-per-cpu 8000
+#SBATCH -C K80
 
 module load cudnn/5.1
 module load cuda80
